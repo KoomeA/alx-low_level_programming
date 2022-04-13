@@ -5,7 +5,7 @@
  * A program that prints _putchar followed by a new line
  */
 
-in main(void)
+int main(void)
 {	
 	_putchar('_')
 	_putchar('p')
