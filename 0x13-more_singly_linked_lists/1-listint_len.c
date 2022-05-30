@@ -1,6 +1,7 @@
 #include "lists.h"
 /**
  * listint_len - This function return to the number of nodes
+ * @head: my struct
  * Return: This return to the number the nodes
  *
  */
