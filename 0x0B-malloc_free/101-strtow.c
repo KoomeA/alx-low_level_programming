@@ -1,33 +1,67 @@
 #include "main.h"
-#include <stdio.h>
-int main()
+#include <stdlib.h>
+
+/**
+ * ch_free_grid - frees a 2 dimensional array.
+ * @grid: multidimensional array of char.
+ * @height: height of the array.
+ *
+ * Return: no return
+ */
+void ch_free_grid(char **grid, unsigned int height)
 {
-	char str1[100]
-	char newString[10][10];
-	int i,j,ctr;
-		printf("\n\n Split string by space into words :\n");
-		printf("-----------------------\n);
+	if (grid != NULL && height != 0)
+	{
+		for (; height > 0; height--)
+			free(grid[height]);
+		free(grid[height]);
+		free(grid);
+	}
+}
 
-	printf("Input a string : ");
-	fgets(str1, sizeof str1, stdin);
+/**
+ * strtow - splits a string into words.
+ * @str: string.
+ *
+ * Return: pointer of an array of integers
+ */
+char **strtow(char *str)
+{
+	char **aout;
+	unsigned int c, height, i, j, a1;
 
-	j=0 ctr=0
-		for(i=0;i<=(strlen(str1));i++)
+	if (str == NULL || *str == '\0')
+		return (NULL);
+	for (c = height = 0; str[c] != '\0'; c++)
+		if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
+			height++;
+	aout = malloc((height + 1) * sizeof(char *));
+	if (aout == NULL || height == 0)
+	{
+		free(aout);
+		return (NULL);
+	}
+	for (i = a1 = 0; i < height; i++)
+	{
+		for (c = a1; str[c] != '\0'; c++)
 		{
-			if(str1[i]==' '||str1[i]=='\0')
+			if (str[c] == ' ')
+				a1++;
+			if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
 			{
-				neString[ctr][j]='\0';
-				ctr++;
-				j=0;
-			}
-			esle
-			{
-				newString[ctr][j]=str1[i];
-				j++;
+				aout[i] = malloc((c - a1 + 2) * sizeof(char));
+				if (aout[i] == NULL)
+				{
+					ch_free_grid(aout, i);
+					return (NULL);
+				}
+				break;
 			}
 		}
-		printf("\n strings or words after split by space are :\n");
-		for(i=0;i < ctr;i++)
-			printf(" %s\n",newString[i]);
-		return 0;
+		for (j = 0; a1 <= c; a1++, j++)
+			aout[i][j] = str[a1];
+		aout[i][j] = '\0';
+	}
+	aout[i] = NULL;
+	return (aout);
 }
